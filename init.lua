@@ -569,7 +569,7 @@ require('lazy').setup({
       --  - settings (table): Override the default settings passed when initializing the server.
       --        For example, to see the options for `lua_ls`, you could go to: https://luals.github.io/wiki/settings/
       local servers = {
-        -- clangd = {},
+        clangd = {},
         -- gopls = {},
         -- pyright = {},
         -- rust_analyzer = {},
@@ -581,6 +581,7 @@ require('lazy').setup({
         -- But for many setups, the LSP (`tsserver`) will work just fine
         -- tsserver = {},
         --
+        omnisharp = {},
 
         lua_ls = {
           -- cmd = {...},
@@ -917,3 +918,26 @@ require('lazy').setup({
 
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
+
+-- Make nvim autocomplete like bash (but slightly better)
+-- https://stackoverflow.com/questions/526858/how-do-i-make-vim-do-normal-bash-like-tab-completion-for-file-names
+vim.o.wildmenu = true
+vim.o.wildmode = 'longest,list,full'
+
+-- Make tab output space characters (and differentiate actual tab characters from spaces)
+-- https://stackoverflow.com/questions/1878974/redefine-tab-as-4-spaces:
+vim.o.tabstop = 8
+vim.o.softtabstop = 0
+vim.o.shiftwidth = 4
+vim.o.smarttab = true
+vim.o.expandtab = true
+
+-- ...but disable expandtab for Makefiles
+vim.api.nvim_create_autocmd('FileType', {
+  pattern = 'make',
+  callback = function()
+    vim.bo.shiftwidth = 8
+    vim.bo.smarttab = false
+    vim.bo.expandtab = false
+  end,
+})
