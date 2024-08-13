@@ -571,7 +571,7 @@ require('lazy').setup({
       local servers = {
         clangd = {},
         -- gopls = {},
-        -- pyright = {},
+        pyright = {},
         -- rust_analyzer = {},
         -- ... etc. See `:help lspconfig-all` for a list of all the pre-configured LSPs
         --
@@ -937,7 +937,18 @@ vim.api.nvim_create_autocmd('FileType', {
   pattern = 'make',
   callback = function()
     vim.bo.shiftwidth = 8
-    vim.bo.smarttab = false
+    vim.o.smarttab = false
     vim.bo.expandtab = false
   end,
 })
+
+-- ...and re-enable smarttab when leaving Makefiles
+vim.api.nvim_create_autocmd('BufLeave', {
+  pattern = '*.mak,*.make,Makefile',
+  callback = function()
+    vim.o.smarttab = true
+  end,
+})
+
+-- vim.g.netrw_liststyle = 1
+-- vim.g.netrw_sort_by = 'name'
