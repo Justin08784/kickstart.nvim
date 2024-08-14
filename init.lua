@@ -806,7 +806,10 @@ require('lazy').setup({
       -- Load the colorscheme here.
       -- Like many other themes, this one has different styles, and you could load
       -- any other, such as 'tokyonight-storm', 'tokyonight-moon', or 'tokyonight-day'.
+
       vim.cmd.colorscheme 'tokyonight-night'
+
+      -- I had to download this one and manually put it in ~/.config/nvim/colors
       -- vim.cmd.colorscheme 'Monokai-Charcoal'
 
       -- You can configure highlights by doing something like:
