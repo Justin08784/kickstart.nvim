@@ -783,6 +783,18 @@ require('lazy').setup({
     end,
   },
 
+  -- {
+  --   'sainnhe/sonokai',
+  --   lazy = false,
+  --   priority = 1000,
+  --   config = function()
+  --     -- Optionally configure and load the colorscheme
+  --     -- directly inside the plugin declaration.
+  --     vim.g.sonokai_enable_italic = true
+  --     vim.cmd.colorscheme 'sonokai'
+  --   end,
+  -- },
+
   { -- You can easily change to a different colorscheme.
     -- Change the name of the colorscheme plugin below, and then
     -- change the command in the config to whatever the name of that colorscheme is.
@@ -795,6 +807,7 @@ require('lazy').setup({
       -- Like many other themes, this one has different styles, and you could load
       -- any other, such as 'tokyonight-storm', 'tokyonight-moon', or 'tokyonight-day'.
       vim.cmd.colorscheme 'tokyonight-night'
+      -- vim.cmd.colorscheme 'Monokai-Charcoal'
 
       -- You can configure highlights by doing something like:
       vim.cmd.hi 'Comment gui=none'
