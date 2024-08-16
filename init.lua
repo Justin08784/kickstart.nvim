@@ -784,6 +784,18 @@ require('lazy').setup({
   },
 
   {
+    'sainnhe/gruvbox-material',
+    lazy = false,
+    priority = 1000,
+  },
+
+  {
+    'catppuccin/nvim',
+    name = 'catppuccin',
+    priority = 1000,
+  },
+
+  {
     'sainnhe/sonokai',
     lazy = false,
     priority = 1000,
@@ -799,9 +811,6 @@ require('lazy').setup({
     'morhetz/gruvbox',
     lazy = false,
     priority = 1000,
-    config = function()
-      -- vim.cmd.colorscheme 'gruvbox'
-    end,
   },
 
   { -- You can easily change to a different colorscheme.
@@ -815,11 +824,6 @@ require('lazy').setup({
       -- Load the colorscheme here.
       -- Like many other themes, this one has different styles, and you could load
       -- any other, such as 'tokyonight-storm', 'tokyonight-moon', or 'tokyonight-day'.
-
-      vim.cmd.colorscheme 'tokyonight-night'
-
-      -- I had to download this one and manually put it in ~/.config/nvim/colors
-      -- vim.cmd.colorscheme 'Monokai-Charcoal'
 
       -- You can configure highlights by doing something like:
       vim.cmd.hi 'Comment gui=none'
@@ -977,3 +981,17 @@ vim.api.nvim_create_autocmd('BufLeave', {
 
 -- vim.g.netrw_liststyle = 1
 -- vim.g.netrw_sort_by = 'name'
+
+-- disable lsp logging to prevent growing log file
+vim.lsp.set_log_level 'off'
+
+-- color theme
+-- vim.cmd.colorscheme 'tokyonight-night'
+
+-- I had to download this one and manually put it in ~/.config/nvim/colors
+-- vim.cmd.colorscheme 'Monokai-Charcoal'
+
+-- vim.cmd.colorscheme 'sonokai'
+-- vim.cmd.colorscheme 'gruvbox'
+vim.cmd.colorscheme 'gruvbox-material'
+-- vim.cmd.colorscheme 'catppuccin'
