@@ -986,12 +986,12 @@ vim.api.nvim_create_autocmd('BufLeave', {
 vim.lsp.set_log_level 'off'
 
 -- color theme
--- vim.cmd.colorscheme 'tokyonight-night'
+vim.cmd.colorscheme 'tokyonight-night'
 
 -- I had to download this one and manually put it in ~/.config/nvim/colors
 -- vim.cmd.colorscheme 'Monokai-Charcoal'
 
 -- vim.cmd.colorscheme 'sonokai'
 -- vim.cmd.colorscheme 'gruvbox'
-vim.cmd.colorscheme 'gruvbox-material'
+-- vim.cmd.colorscheme 'gruvbox-material'
 -- vim.cmd.colorscheme 'catppuccin'
