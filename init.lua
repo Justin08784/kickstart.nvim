@@ -833,6 +833,14 @@ require('lazy').setup({
   -- Highlight todo, notes, etc in comments
   { 'folke/todo-comments.nvim', event = 'VimEnter', dependencies = { 'nvim-lua/plenary.nvim' }, opts = { signs = false } },
 
+  {
+    'chipsenkbeil/distant.nvim',
+    branch = 'v0.3',
+    config = function()
+      require('distant'):setup()
+    end,
+  },
+
   { -- Collection of various small independent plugins/modules
     'echasnovski/mini.nvim',
     config = function()
@@ -995,3 +1003,5 @@ vim.cmd.colorscheme 'tokyonight-night'
 -- vim.cmd.colorscheme 'gruvbox'
 -- vim.cmd.colorscheme 'gruvbox-material'
 -- vim.cmd.colorscheme 'catppuccin'
+
+vim.o.colorcolumn = '120'
