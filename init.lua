@@ -227,6 +227,9 @@ vim.opt.rtp:prepend(lazypath)
 --    :Lazy update
 --
 -- NOTE: Here is where you install your plugins.
+
+
+
 require('lazy').setup({
   -- NOTE: Plugins can be added with a link (or for a github repo: 'owner/repo' link).
   'tpope/vim-sleuth', -- Detect tabstop and shiftwidth automatically
@@ -271,7 +274,7 @@ require('lazy').setup({
   -- after the plugin has been loaded:
   --  config = function() ... end
 
-  { -- Useful plugin to show you pending keybinds.
+  {                     -- Useful plugin to show you pending keybinds.
     'folke/which-key.nvim',
     event = 'VimEnter', -- Sets the loading event to 'VimEnter'
     config = function() -- This is the function that runs, AFTER loading
@@ -319,7 +322,7 @@ require('lazy').setup({
       { 'nvim-telescope/telescope-ui-select.nvim' },
 
       -- Useful for getting pretty icons, but requires a Nerd Font.
-      { 'nvim-tree/nvim-web-devicons', enabled = vim.g.have_nerd_font },
+      { 'nvim-tree/nvim-web-devicons',            enabled = vim.g.have_nerd_font },
     },
     config = function()
       -- Telescope is a fuzzy finder that comes with a lot of different things that
@@ -415,7 +418,7 @@ require('lazy').setup({
       },
     },
   },
-  { 'Bilal2453/luvit-meta', lazy = true },
+  { 'Bilal2453/luvit-meta',     lazy = true },
   {
     -- Main LSP Configuration
     'neovim/nvim-lspconfig',
@@ -427,7 +430,7 @@ require('lazy').setup({
 
       -- Useful status updates for LSP.
       -- NOTE: `opts = {}` is the same as calling `require('fidget').setup({})`
-      { 'j-hui/fidget.nvim', opts = {} },
+      { 'j-hui/fidget.nvim',       opts = {} },
 
       -- Allows extra capabilities provided by nvim-cmp
       'hrsh7th/cmp-nvim-lsp',
@@ -951,6 +954,32 @@ require('lazy').setup({
       lazy = '💤 ',
     },
   },
+})
+
+-- This block enables clangd LSP (Mason cannot do this automatically, for some reason,
+-- on the 'vm' multipass VM) by making it use any already-installed clangd on the system?
+-- (not exactly sure how it works).
+--
+-- Source: https://www.reddit.com/r/neovim/comments/11i8mx6/how_do_i_install_a_lsp_unsupported_by/
+local pattern = { "c", "cpp" } -- Add file types for C/C++
+local cmd = { "clangd" }       -- Command to run clangd
+-- Add files/folders here that indicate the root of a project (e.g., .git or Makefile)
+local root_markers = { ".git", "Makefile", "compile_commands.json" }
+-- Change to table with settings if required
+local settings = vim.empty_dict()
+
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = pattern,
+  callback = function(args)
+    local match = vim.fs.find(root_markers, { path = args.file, upward = true })[1]
+    local root_dir = match and vim.fn.fnamemodify(match, ":p:h") or nil
+    vim.lsp.start({
+      name = "clangd",
+      cmd = cmd,
+      root_dir = root_dir,
+      settings = settings,
+    })
+  end,
 })
 
 -- The line beneath this is called `modeline`. See `:help modeline`
