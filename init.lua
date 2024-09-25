@@ -228,8 +228,6 @@ vim.opt.rtp:prepend(lazypath)
 --
 -- NOTE: Here is where you install your plugins.
 
-
-
 require('lazy').setup({
   -- NOTE: Plugins can be added with a link (or for a github repo: 'owner/repo' link).
   'tpope/vim-sleuth', -- Detect tabstop and shiftwidth automatically
@@ -274,7 +272,7 @@ require('lazy').setup({
   -- after the plugin has been loaded:
   --  config = function() ... end
 
-  {                     -- Useful plugin to show you pending keybinds.
+  { -- Useful plugin to show you pending keybinds.
     'folke/which-key.nvim',
     event = 'VimEnter', -- Sets the loading event to 'VimEnter'
     config = function() -- This is the function that runs, AFTER loading
@@ -322,7 +320,7 @@ require('lazy').setup({
       { 'nvim-telescope/telescope-ui-select.nvim' },
 
       -- Useful for getting pretty icons, but requires a Nerd Font.
-      { 'nvim-tree/nvim-web-devicons',            enabled = vim.g.have_nerd_font },
+      { 'nvim-tree/nvim-web-devicons', enabled = vim.g.have_nerd_font },
     },
     config = function()
       -- Telescope is a fuzzy finder that comes with a lot of different things that
@@ -418,7 +416,7 @@ require('lazy').setup({
       },
     },
   },
-  { 'Bilal2453/luvit-meta',     lazy = true },
+  { 'Bilal2453/luvit-meta', lazy = true },
   {
     -- Main LSP Configuration
     'neovim/nvim-lspconfig',
@@ -430,7 +428,7 @@ require('lazy').setup({
 
       -- Useful status updates for LSP.
       -- NOTE: `opts = {}` is the same as calling `require('fidget').setup({})`
-      { 'j-hui/fidget.nvim',       opts = {} },
+      { 'j-hui/fidget.nvim', opts = {} },
 
       -- Allows extra capabilities provided by nvim-cmp
       'hrsh7th/cmp-nvim-lsp',
@@ -911,6 +909,15 @@ require('lazy').setup({
       --    - Treesitter + textobjects: https://github.com/nvim-treesitter/nvim-treesitter-textobjects
     end,
   },
+  {
+    'lervag/vimtex',
+    lazy = false, -- we don't want to lazy load VimTeX
+    -- tag = "v2.15", -- uncomment to pin to a specific release
+    init = function()
+      -- VimTeX configuration goes here, e.g.
+      vim.g.vimtex_view_method = 'zathura'
+    end,
+  },
 
   -- The following two comments only work if you have downloaded the kickstart repo, not just copy pasted the
   -- init.lua. If you want these files, they are in the repository, so you can just download them and
@@ -954,32 +961,6 @@ require('lazy').setup({
       lazy = '💤 ',
     },
   },
-})
-
--- This block enables clangd LSP (Mason cannot do this automatically, for some reason,
--- on the 'vm' multipass VM) by making it use any already-installed clangd on the system?
--- (not exactly sure how it works).
---
--- Source: https://www.reddit.com/r/neovim/comments/11i8mx6/how_do_i_install_a_lsp_unsupported_by/
-local pattern = { "c", "cpp" } -- Add file types for C/C++
-local cmd = { "clangd" }       -- Command to run clangd
--- Add files/folders here that indicate the root of a project (e.g., .git or Makefile)
-local root_markers = { ".git", "Makefile", "compile_commands.json" }
--- Change to table with settings if required
-local settings = vim.empty_dict()
-
-vim.api.nvim_create_autocmd("FileType", {
-  pattern = pattern,
-  callback = function(args)
-    local match = vim.fs.find(root_markers, { path = args.file, upward = true })[1]
-    local root_dir = match and vim.fn.fnamemodify(match, ":p:h") or nil
-    vim.lsp.start({
-      name = "clangd",
-      cmd = cmd,
-      root_dir = root_dir,
-      settings = settings,
-    })
-  end,
 })
 
 -- The line beneath this is called `modeline`. See `:help modeline`
@@ -1034,3 +1015,32 @@ vim.cmd.colorscheme 'tokyonight-night'
 -- vim.cmd.colorscheme 'catppuccin'
 
 vim.o.colorcolumn = '120'
+
+-- This is necessary for VimTeX to load properly. The "indent" is optional.
+-- Note: Most plugin managers will do this automatically!
+vim.cmd 'filetype plugin indent on'
+
+-- This enables Vim's and neovim's syntax-related features. Without this, some
+-- VimTeX features will not work (see ":help vimtex-requirements" for more
+-- info).
+-- Note: Most plugin managers will do this automatically!
+vim.cmd 'syntax enable'
+
+-- Viewer options: One may configure the viewer either by specifying a built-in
+-- viewer method:
+vim.g.vimtex_view_method = 'zathura'
+
+-- Or with a generic interface:
+vim.g.vimtex_view_general_viewer = 'okular'
+vim.g.vimtex_view_general_options = '--unique file:@pdf\\#src:@line@tex'
+
+-- VimTeX uses latexmk as the default compiler backend. If you use it, which is
+-- strongly recommended, you probably don't need to configure anything. If you
+-- want another compiler backend, you can change it as follows. The list of
+-- supported backends and further explanation is provided in the documentation,
+-- see ":help vimtex-compiler".
+vim.g.vimtex_compiler_method = 'latexrun'
+
+-- Most VimTeX mappings rely on localleader and this can be changed with the
+-- following line. The default is usually fine and is the symbol "\".
+vim.g.maplocalleader = ','
