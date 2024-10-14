@@ -230,7 +230,7 @@ vim.opt.rtp:prepend(lazypath)
 
 require('lazy').setup({
   -- NOTE: Plugins can be added with a link (or for a github repo: 'owner/repo' link).
-  'tpope/vim-sleuth', -- Detect tabstop and shiftwidth automatically
+  -- 'tpope/vim-sleuth', -- Detect tabstop and shiftwidth automatically
 
   -- NOTE: Plugins can also be added by using a table,
   -- with the first argument being the link and the following
@@ -892,6 +892,10 @@ require('lazy').setup({
         --  If you are experiencing weird indenting issues, add the language to
         --  the list of additional_vim_regex_highlighting and disabled languages for indent.
         additional_vim_regex_highlighting = { 'ruby' },
+        -- To resolve latex LSP conflict between vimtex and tree-sitter
+        -- https://github.com/lervag/vimtex/issues/2469
+        disable = { 'latex' },
+        additional_vim_regex_highlighting = { 'latex', 'markdown' },
       },
       indent = { enable = true, disable = { 'ruby' } },
     },
@@ -1039,7 +1043,7 @@ vim.g.vimtex_view_general_options = '--unique file:@pdf\\#src:@line@tex'
 -- want another compiler backend, you can change it as follows. The list of
 -- supported backends and further explanation is provided in the documentation,
 -- see ":help vimtex-compiler".
-vim.g.vimtex_compiler_method = 'latexrun'
+vim.g.vimtex_compiler_method = 'latexmk'
 
 -- Most VimTeX mappings rely on localleader and this can be changed with the
 -- following line. The default is usually fine and is the symbol "\".
