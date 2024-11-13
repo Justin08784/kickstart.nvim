@@ -83,6 +83,9 @@ I hope you enjoy your Neovim journey,
 
 P.S. You can delete this when you're done too. It's your config now! :)
 --]]
+-- NOTE:
+-- - Telescope's live_grep requires ripgrep; Lazy does not seem to install this on Ubuntu:
+-- do: sudo apt-get install ripgrep
 
 -- Set <space> as the leader key
 -- See `:help mapleader`
